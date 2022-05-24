@@ -1,6 +1,7 @@
 package com.aop.config;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
@@ -16,5 +17,10 @@ public class AspectConfig {
 	@Before(value = "execution(* com.aop.controller.*.*(..))")
 	public void logStatementBefore(JoinPoint joinPoint) {
 		log.info("Executing {}", joinPoint);
+	}
+	
+	@After(value = "execution(* com.aop.controller.*.*(..))")
+	public void logStatementAfter(JoinPoint joinPoint) {
+		log.info("Complete execution ofß {}", joinPoint);
 	}
 }
