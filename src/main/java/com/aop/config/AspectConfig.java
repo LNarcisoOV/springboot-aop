@@ -38,4 +38,22 @@ public class AspectConfig {
 		}
 		return null;
 	}
+
+	@Around(value = "execution(* com.aop.service.*.*(..))")
+	public Object timeTracker(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+		long startTime = System.currentTimeMillis();
+
+		try {
+			return proceedingJoinPoint.proceed();
+		} catch (TaskException taskException) {
+
+			long timeTaken = System.currentTimeMillis() - startTime;
+
+			log.info("TaskException HttpStatus code {}", taskException.getHttpStatus().value());
+			log.info("TaskException Message {}", taskException.getMessage());
+			log.info("Time taken by {} is {}", proceedingJoinPoint, timeTaken);
+
+		}
+		return null;
+	}
 }
